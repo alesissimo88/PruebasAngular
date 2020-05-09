@@ -1,0 +1,78 @@
+
+
+<div class="row">
+  <h1>Listado de Alumnos</h1>
+  <div class="col text-right mt-2">
+    <button class="btn btn-outline-danger"
+                (click)="salir()">
+            Salir
+    </button>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col text-right">
+        <button routerLink="/alumno/nuevo" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Agregar
+        </button>
+    </div>
+</div>
+
+<!-- *ngIf="!cargando" hace que la tabla no se muestre, hasta que haga la carga de información-->
+<table *ngIf="!cargando && alumnos.length > 0" class="table mt-3 animated fadeIn faster">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Ciudad</th>
+        <th scope="col">Ajustes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of alumnos; let i = index">
+        <th scope="row">{{  i + 1 }}</th>
+        <td>{{ alumno.nombre }}</td>
+        <td>{{ alumno.apellidos }}</td>
+        <td>{{ alumno.direcion }}</td>
+        <td>{{ alumno.ciudad }}</td>
+        <td>
+
+          <button class="btn btn-info mr-1"
+                  [routerLink]="['/alumno', alumno.id]"> 
+            <i class="fa fa-pen"></i>
+          </button>
+
+          <button class="btn btn-danger"
+                  (click)="borrarAlumno( alumno, i )">
+            <i class="fa fa-trash"></i>
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+    <div *ngIf="!cargando && alumnos.length === 0" class="alert alert-warning text-center mt-3">
+    <h4 class="alert-heading">No hay registros</h4>
+    <p>
+        <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+    </div>
+
+
+  <div class="alert alert-info text-center mt-3"
+        *ngIf="cargando">
+      <h4 class="alert-heading">Cargando</h4>
+      <p>
+          <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+      </p>
+
+      <p class="mb-0">
+        Espere por favor
+      </p>
+  </div>
